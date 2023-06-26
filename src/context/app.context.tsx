@@ -1,17 +1,33 @@
-import { Post } from '@/models/post';
-import React, { createContext, ReactNode, useReducer, useRef } from 'react';
+import { Post } from "@/models/post";
+import React, { createContext, ReactNode, useReducer, useRef } from "react";
 
-import Modal, { ModalProps } from '@/components/Modal';
+import Modal from "@/components/Modal";
 
 enum AppActions {
-  ADD_POSTS = 'ADD_POSTS',
-  TOGGLE_FAVORITE = 'TOGGLE_FAVORITE',
-  OPEN_MODAL = 'OPEN_MODAL',
-  CLOSE_MODAL = 'CLOSE_MODAL',
+  ADD_POSTS = "ADD_POSTS",
+  TOGGLE_FAVORITE = "TOGGLE_FAVORITE",
+  OPEN_MODAL = "OPEN_MODAL",
+  CLOSE_MODAL = "CLOSE_MODAL",
 }
 
-// Reducer para manejar las acciones
-const reducer = (state, action) => {
+interface AppState {
+  posts: Post[];
+  modalState: {
+    open: boolean;
+    post: Post | null;
+  };
+}
+
+type AppAction =
+  | { type: AppActions.ADD_POSTS; payload: Post[] }
+  | {
+      type: AppActions.TOGGLE_FAVORITE;
+      payload: { id: number; value: boolean };
+    }
+  | { type: AppActions.OPEN_MODAL; payload: { post: Post } }
+  | { type: AppActions.CLOSE_MODAL };
+
+const reducer = (state: AppState, action: AppAction) => {
   switch (action.type) {
     case AppActions.ADD_POSTS:
       return {
@@ -53,12 +69,12 @@ const reducer = (state, action) => {
         return post;
       });
 
-      updatedPosts = updatedPosts.sort((a, b) => {
+      updatedPosts = updatedPosts.sort((a: Post, b: Post) => {
         if (a.isFavorite && b.isFavorite) {
           return -1;
         }
 
-        return b.isFavorite - a.isFavorite;
+        return Number(b.isFavorite) - Number(a.isFavorite);
       });
 
       if (state?.modalState?.post?.id === action.payload.id) {
@@ -81,25 +97,33 @@ const initialState = {
   posts: [],
   modalState: {
     open: false,
-    data: null,
+    post: null,
   },
 };
 
-const AppContext = createContext({});
+interface AppContextProps {
+  posts: Post[];
+  addPosts: (posts: Post[]) => void;
+  toggleFavorite: (id: number, value?: boolean) => void;
+  openModal: (post: Post) => void;
+  closeModal: () => void;
+}
+
+const AppContext = createContext({} as AppContextProps);
 
 const AppProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const modalRef = useRef<HTMLDialogElement>(null);
 
-  const addPosts = (posts: unknown[]) => {
+  const addPosts = (posts: Post[]) => {
     dispatch({
       type: AppActions.ADD_POSTS,
       payload: posts,
     });
   };
 
-  const toggleFavorite = (id: string, value: boolean = false) => {
+  const toggleFavorite = (id: number, value: boolean = false) => {
     if (!id) {
       return;
     }
@@ -127,7 +151,6 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   const closeModal = () => {
     dispatch({
       type: AppActions.CLOSE_MODAL,
-      payload: {},
     });
 
     modalRef?.current?.close();

@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 
-import { Post } from '../../models/post';
-import Heart from '../icons/Heart';
-import Clap from '../icons/Clap';
+import { Post } from "@/models/post";
+import Heart from "../icons/Heart";
+import Clap from "../icons/Clap";
 
 interface PostCardProps {
   post: Post;
-  onClick: (ev: React.MouseEvent<HTMLDivElement>) => void;
-  toggleFavorite: (ev: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (ev: React.MouseEvent<HTMLDivElement>) => void;
+  toggleFavorite?: (ev: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const PostCard: React.FC<PostCardProps> = ({
@@ -42,7 +42,7 @@ const PostCard: React.FC<PostCardProps> = ({
             <Heart
               height={24}
               width={24}
-              className={post?.isFavorite ? 'fill-red-500' : 'stroke-current'}
+              className={post?.isFavorite ? "fill-red-500" : "stroke-current"}
             />
           </button>
         </div>

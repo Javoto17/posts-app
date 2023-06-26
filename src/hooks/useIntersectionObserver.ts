@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from "react";
 
 interface Args extends IntersectionObserverInit {
   freezeOnceVisible?: boolean;
@@ -7,7 +7,7 @@ interface Args extends IntersectionObserverInit {
 export function useIntersectionObserver({
   threshold = 0,
   root = null,
-  rootMargin = '0%',
+  rootMargin = "0%",
 }: Args) {
   const [node, setNode] = useState<Element | null>(null);
   const [isVisible, setIsVisible] = useState(false);

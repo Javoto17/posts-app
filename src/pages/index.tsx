@@ -1,17 +1,16 @@
-import { useContext, MouseEvent, useCallback } from 'react';
+import { useContext, MouseEvent, useCallback } from "react";
 
-import PostCard from '@/components/PostCard';
-import PostList from '@/components/PostList';
+import PostCard from "@/components/PostCard";
+import PostList from "@/components/PostList";
 
-import { Post } from '@/models/post';
+import { Post } from "@/models/post";
 
-import useModal from '@/hooks/useModal';
-import usePostsPagination from '../hooks/usePostsPagination';
-import { AppContext } from '@/context/app.context';
+import usePostsPagination from "../hooks/usePostsPagination";
+import { AppContext } from "@/context/app.context";
 
 export default function Home() {
   const { toggleFavorite: setFavorite, openModal } = useContext(AppContext);
-  const { posts, fetchNextPage, isLoading, isLastPage } =
+  const { posts, fetchNextPage, isLoading, isLastPage, error } =
     usePostsPagination(30);
 
   const toggleFavorite = (
@@ -34,6 +33,7 @@ export default function Home() {
         data={posts}
         isLoading={isLoading}
         isLimitReached={isLastPage}
+        error={error}
         onReachedLimit={() => {
           fetchNextPage();
         }}
