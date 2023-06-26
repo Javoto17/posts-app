@@ -18,7 +18,7 @@ export default function Home() {
     id: number,
     value: boolean
   ) => {
-    ev?.preventDefault();
+    ev?.stopPropagation();
 
     setFavorite(id, !value);
   };
