@@ -1,6 +1,6 @@
-import { SVGProps } from 'react';
+import { IconProps } from "../Clap";
 
-const Heart = (props) => (
+const Heart = (props: IconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"

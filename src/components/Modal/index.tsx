@@ -1,8 +1,8 @@
-import { forwardRef, useImperativeHandle, useRef, MouseEvent } from 'react';
-import { Post } from '@/models/post';
-import Clap from '../icons/Clap';
-import Heart from '../icons/Heart';
-import usePostComments from '@/hooks/usePostComments';
+import { forwardRef, useImperativeHandle, useRef, MouseEvent } from "react";
+import { Post } from "@/models/post";
+import Clap from "../icons/Clap";
+import Heart from "../icons/Heart";
+import usePostComments from "@/hooks/usePostComments";
 
 export interface ModalProps {
   post: Post | null;
@@ -27,7 +27,7 @@ const Modal = forwardRef<HTMLDialogElement | null, ModalProps>(
     };
 
     const onClickFavorite = (ev: MouseEvent<HTMLButtonElement>) => {
-      if (typeof toggleFavorite === 'function' && post?.id)
+      if (typeof toggleFavorite === "function" && post?.id)
         toggleFavorite(post?.id, !post?.isFavorite);
     };
 
@@ -53,9 +53,9 @@ const Modal = forwardRef<HTMLDialogElement | null, ModalProps>(
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="#000000"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 className="feather feather-x"
               >
                 <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -86,7 +86,7 @@ const Modal = forwardRef<HTMLDialogElement | null, ModalProps>(
                   height={24}
                   width={24}
                   className={
-                    post?.isFavorite ? 'fill-red-500' : 'stroke-current'
+                    post?.isFavorite ? "fill-red-500" : "stroke-current"
                   }
                 />
               </button>
